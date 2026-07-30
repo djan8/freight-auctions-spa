@@ -1,6 +1,6 @@
 # Тестовое задание: Frontend Developer
 
-**Проект:** SPA для работы с грузовыми аукционами по OpenAPI-схеме.
+Проект: SPA для работы с грузовыми аукционами по OpenAPI-схеме.
 
 ## Контекст
 
@@ -32,10 +32,10 @@ AI использовать можно и нужно, но кандидат от
 
 Использовать endpoints из OpenAPI-схемы:
 
-* | `POST` | `/auctions/list` | Список аукционов |
-* | `GET` | `/auctions/{auctionUuid}` | Детальная информация |
-* | `GET` | `/auctions/{auctionUuid}/bets` | Список ставок |
-* | `POST` | `/auctions/{auctionUuid}/bets` | Установить ставку |
+- | `POST` | `/auctions/list` | Список аукционов |
+- | `GET` | `/auctions/{auctionUuid}` | Детальная информация |
+- | `GET` | `/auctions/{auctionUuid}/bets` | Список ставок |
+- | `POST` | `/auctions/{auctionUuid}/bets` | Установить ставку |
 
 Backend писать не нужно. Нужно реализовать MSW-моки, которые соответствуют схеме и реально меняют состояние после mutations.
 
@@ -103,10 +103,10 @@ Backend писать не нужно. Нужно реализовать MSW-мо
 - текущую цену, доступную цену, min/max/step
 - состояние своей ставки
 - ограничения из DTO:
-    - `can_set_bet`
-    - `hide_bets_history`
-    - `hide_points_address_and_contacts`
-    - `no_view_cargo_price`
+  - `can_set_bet`
+  - `hide_bets_history`
+  - `hide_points_address_and_contacts`
+  - `no_view_cargo_price`
 
 ## Ставки
 
