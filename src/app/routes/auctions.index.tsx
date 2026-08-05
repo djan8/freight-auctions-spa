@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 
 import { fetchAuctionList } from '@/shared/api/auctions.ts'
 
-export const Route = createFileRoute('/auctions')({
+export const Route = createFileRoute('/auctions/')({
   component: AuctionsPage,
 })
 
@@ -38,10 +38,16 @@ function AuctionsPage() {
       </select>
       <div>
         {data.data?.map((el) => (
-          <div key={el.main?.id}>
-            {el.main?.cargo_num}-{el.route?.load?.city} {'->'}
-            {el.route?.unload?.city}- {el.trading?.price?.current} ₽
-          </div>
+          <Link
+            to="/auctions/$auctionUuid"
+            key={el.main?.id}
+            params={{ auctionUuid: el.main?.order_uid ?? '' }}
+          >
+            <div key={el.main?.id}>
+              {el.main?.cargo_num}-{el.route?.load?.city} {'->'}
+              {el.route?.unload?.city}- {el.trading?.price?.current} ₽
+            </div>
+          </Link>
         ))}
       </div>
     </>
