@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 
-import { fetchAuctionList } from '@/shared/api/auctions.ts'
+import { fetchAuctionList } from '@/shared/api/mocks/auctions.ts'
 
 export const Route = createFileRoute('/auctions/')({
   component: AuctionsPage,

@@ -2,8 +2,10 @@ import { http, HttpResponse, delay } from 'msw'
 import type {
   AuctionListRequest,
   AuctionListResponse,
+  AuctionShowResponse,
 } from '@/shared/api/types.ts'
 import { auctions } from '@/shared/api/mocks/db.ts'
+import { findAuctionDetail } from '@/shared/api/mocks/details.ts'
 
 export const handlers = [
   http.post<never, AuctionListRequest, AuctionListResponse>(
@@ -37,6 +39,18 @@ export const handlers = [
           to: start + items.length,
         },
       })
+    },
+  ),
+  http.get<{ auctionUuid: string }, never, AuctionShowResponse>(
+    '/api/v1/auctions/:auctionUuid',
+    async ({ params }) => {
+      await delay(300)
+      const detail = findAuctionDetail(params.auctionUuid)
+
+      if (!detail) {
+        return HttpResponse.json(null, { status: 404 })
+      }
+      return HttpResponse.json(detail)
     },
   ),
 ]
