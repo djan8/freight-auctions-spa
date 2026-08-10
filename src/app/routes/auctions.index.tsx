@@ -17,7 +17,6 @@ function AuctionsPage() {
     staleTime: 30_000,
   })
 
-
   if (isPending) return <div>Загрузка…</div>
   if (isError) return <div>Ошибка: {String(error)}</div>
 
