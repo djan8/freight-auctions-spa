@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 
-import { fetchAuctionList } from '@/shared/api/mocks/auctions.ts'
+import { fetchAuctionList } from '@/shared/api/auctions.ts'
 
 export const Route = createFileRoute('/auctions/')({
   component: AuctionsPage,
@@ -16,6 +16,7 @@ function AuctionsPage() {
     queryFn: ({ signal }) => fetchAuctionList({ page }, signal),
     staleTime: 30_000,
   })
+
 
   if (isPending) return <div>Загрузка…</div>
   if (isError) return <div>Ошибка: {String(error)}</div>
