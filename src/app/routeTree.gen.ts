@@ -12,7 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestOffRouteImport } from './routes/testOff'
 import { Route as AuctionsIndexRouteImport } from './routes/auctions.index'
 import { Route as AuctionsAuctionUuidRouteImport } from './routes/auctions.$auctionUuid'
-import { Route as AuctionsAuctionUuidBetRouteImport } from './routes/auctions.$auctionUuid_.bett'
+import { Route as AuctionsAuctionUuidBetRouteImport } from './routes/auctions.$auctionUuid_.bet'
 
 const TestOffRoute = TestOffRouteImport.update({
   id: '/testOff',
