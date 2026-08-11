@@ -1,19 +1,28 @@
-import { useState } from 'react'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 
 import { fetchAuctionList } from '@/shared/api/auctions.ts'
+import {
+  auctionSearchParamsSchema,
+  buildApiRequestFromParams,
+} from '@/features/auction-filters/search-params-schema'
 
 export const Route = createFileRoute('/auctions/')({
   component: AuctionsPage,
+  validateSearch: (search) => auctionSearchParamsSchema.parse(search),
 })
 
 function AuctionsPage() {
-  const [page, setPage] = useState(1)
+  const search = Route.useSearch()
+  const apiBoby = buildApiRequestFromParams(search)
+  const navigate = useNavigate({ from: Route.fullPath })
+  const setPage = (newPage: number) => {
+    navigate({ search: (prev) => ({ ...prev, page: newPage }) })
+  }
 
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ['auctions', 'list', { page }],
-    queryFn: ({ signal }) => fetchAuctionList({ page }, signal),
+    queryKey: ['auctions', 'list', apiBoby],
+    queryFn: ({ signal }) => fetchAuctionList(apiBoby, signal),
     staleTime: 30_000,
   })
 
@@ -26,10 +35,10 @@ function AuctionsPage() {
     <>
       <input
         type="number"
-        value={page}
+        value={search.page}
         onChange={(e) => setPage(Number(e.target.value))}
       />
-      <select value={page} onChange={(e) => setPage(+e.target.value)}>
+      <select value={search.page} onChange={(e) => setPage(+e.target.value)}>
         {arrayPage.map((page, index) => (
           <option key={index} value={page}>
             {page}
