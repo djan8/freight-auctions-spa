@@ -21,6 +21,11 @@ export function findAuctionDetail(
           city_name: item.route?.load?.city,
           city_gc_id: item.route?.load?.city_gc_id,
         },
+        cargo: {
+          name: item.cargo?.name,
+          weight: String(item.cargo?.weight ?? ''),
+          volume: String(item.cargo?.volume ?? ''),
+        },
       },
       {
         op_type: 'Unloading',

@@ -14,26 +14,40 @@ export const Route = createFileRoute('/auctions/')({
 
 function AuctionsPage() {
   const search = Route.useSearch()
-  const apiBoby = buildApiRequestFromParams(search)
+  const apiBody = buildApiRequestFromParams(search)
   const navigate = useNavigate({ from: Route.fullPath })
   const setPage = (newPage: number) => {
     navigate({ search: (prev) => ({ ...prev, page: newPage }) })
   }
 
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ['auctions', 'list', apiBoby],
-    queryFn: ({ signal }) => fetchAuctionList(apiBoby, signal),
+    queryKey: ['auctions', 'list', apiBody],
+    queryFn: ({ signal }) => fetchAuctionList(apiBody, signal),
     staleTime: 30_000,
   })
 
   if (isPending) return <div>Загрузка…</div>
   if (isError) return <div>Ошибка: {String(error)}</div>
 
-  const lastPage = data.meta?.last_page ?? 1
-  const arrayPage = Array.from({ length: lastPage }, (_, i) => i + 1)
+  // const lastPage = data.meta?.last_page ?? 1
+  // const arrayPage = Array.from({ length: lastPage }, (_, i) => i + 1)
   return (
     <>
       <input
+        type="text"
+        placeholder="Номер заявки"
+        value={search.cargo_num ?? ''}
+        onChange={(e) =>
+          navigate({
+            search: (prev) => ({
+              ...prev,
+              cargo_num: e.target.value || undefined,
+              page: 1,
+            }),
+          })
+        }
+      />
+      {/* <input
         type="number"
         value={search.page}
         onChange={(e) => setPage(Number(e.target.value))}
@@ -44,7 +58,7 @@ function AuctionsPage() {
             {page}
           </option>
         ))}
-      </select>
+      </select> */}
       <div>
         {data.data?.map((el) => (
           <Link

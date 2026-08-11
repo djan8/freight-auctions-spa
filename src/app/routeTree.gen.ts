@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestOffRouteImport } from './routes/testOff'
 import { Route as AuctionsIndexRouteImport } from './routes/auctions.index'
 import { Route as AuctionsAuctionUuidRouteImport } from './routes/auctions.$auctionUuid'
+import { Route as AuctionsAuctionUuidBetRouteImport } from './routes/auctions.$auctionUuid_.bett'
 
 const TestOffRoute = TestOffRouteImport.update({
   id: '/testOff',
@@ -28,35 +29,57 @@ const AuctionsAuctionUuidRoute = AuctionsAuctionUuidRouteImport.update({
   path: '/auctions/$auctionUuid',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuctionsAuctionUuidBetRoute = AuctionsAuctionUuidBetRouteImport.update({
+  id: '/auctions/$auctionUuid_/bet',
+  path: '/auctions/$auctionUuid/bet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/testOff': typeof TestOffRoute
   '/auctions/$auctionUuid': typeof AuctionsAuctionUuidRoute
   '/auctions/': typeof AuctionsIndexRoute
+  '/auctions/$auctionUuid/bet': typeof AuctionsAuctionUuidBetRoute
 }
 export interface FileRoutesByTo {
   '/testOff': typeof TestOffRoute
   '/auctions/$auctionUuid': typeof AuctionsAuctionUuidRoute
   '/auctions': typeof AuctionsIndexRoute
+  '/auctions/$auctionUuid/bet': typeof AuctionsAuctionUuidBetRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/testOff': typeof TestOffRoute
   '/auctions/$auctionUuid': typeof AuctionsAuctionUuidRoute
   '/auctions/': typeof AuctionsIndexRoute
+  '/auctions/$auctionUuid_/bet': typeof AuctionsAuctionUuidBetRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/testOff' | '/auctions/$auctionUuid' | '/auctions/'
+  fullPaths:
+    | '/testOff'
+    | '/auctions/$auctionUuid'
+    | '/auctions/'
+    | '/auctions/$auctionUuid/bet'
   fileRoutesByTo: FileRoutesByTo
-  to: '/testOff' | '/auctions/$auctionUuid' | '/auctions'
-  id: '__root__' | '/testOff' | '/auctions/$auctionUuid' | '/auctions/'
+  to:
+    | '/testOff'
+    | '/auctions/$auctionUuid'
+    | '/auctions'
+    | '/auctions/$auctionUuid/bet'
+  id:
+    | '__root__'
+    | '/testOff'
+    | '/auctions/$auctionUuid'
+    | '/auctions/'
+    | '/auctions/$auctionUuid_/bet'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   TestOffRoute: typeof TestOffRoute
   AuctionsAuctionUuidRoute: typeof AuctionsAuctionUuidRoute
   AuctionsIndexRoute: typeof AuctionsIndexRoute
+  AuctionsAuctionUuidBetRoute: typeof AuctionsAuctionUuidBetRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +105,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuctionsAuctionUuidRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auctions/$auctionUuid_/bet': {
+      id: '/auctions/$auctionUuid_/bet'
+      path: '/auctions/$auctionUuid/bet'
+      fullPath: '/auctions/$auctionUuid/bet'
+      preLoaderRoute: typeof AuctionsAuctionUuidBetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +119,7 @@ const rootRouteChildren: RootRouteChildren = {
   TestOffRoute: TestOffRoute,
   AuctionsAuctionUuidRoute: AuctionsAuctionUuidRoute,
   AuctionsIndexRoute: AuctionsIndexRoute,
+  AuctionsAuctionUuidBetRoute: AuctionsAuctionUuidBetRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

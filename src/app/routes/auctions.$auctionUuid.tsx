@@ -36,9 +36,28 @@ function AuctionDetailPage() {
           {detailData.routes?.[0]?.location?.city_name} →{' '}
           {detailData.routes?.[1]?.location?.city_name}
         </div>
-        <div>Организатор: {detailData.organizer?.organization_name}</div>
+        <>
+          <div>Организатор: {detailData.organizer?.organization_name}</div>
+          <div>Название:{detailData?.routes?.[0]?.cargo?.name}</div>
+          <div> Вес: {detailData?.routes?.[0]?.cargo?.weight}</div>
+          <div>Объем: {detailData?.routes?.[0]?.cargo?.volume}</div>
+        </>
+        <>
+          <div>Текущая цена:{detailData?.trading?.price?.current}</div>
+          <div> Шаг: {detailData.trading?.price?.step} ₽</div>
+          <div>
+            Можешь ли ты делать ставку?:{' '}
+            {detailData.trading?.can_set_bet ? 'Да' : 'Нет'}
+          </div>
+        </>
       </>
       <>
+        {detailData.trading?.can_set_bet && (
+          <Link to="/auctions/$auctionUuid/bet" params={{ auctionUuid }}>
+            Сделать ставку
+          </Link>
+        )}
+
         <h3>Ставки</h3>
         {betsPending && <div>Загрузка ставок…</div>}
         {betsError && <div>Не удалось загрузить ставки</div>}
